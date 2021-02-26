@@ -1,0 +1,56 @@
+/*
+ * Code for connecting Arduino board to Android using Bluetooth
+ * by Droiduino
+*/
+#include <SoftwareSerial.h>
+
+SoftwareSerial BTSerial(2,3);
+
+int RunledPin = 8; // RUN LED
+//char androidCmd[16]; // Command message from Android
+String androidCmd; // Command message from Android
+int nr;
+/// ----------------------------------------------------------------------------------
+void setup()
+/// ----------------------------------------------------------------------------------
+{
+  BTSerial.begin(9600); // HC05 데이터모드 속도
+
+  pinMode(RunledPin, OUTPUT);
+  Serial.begin(9600);
+  analogWrite(9, 127);
+
+}
+
+/// ----------------------------------------------------------------------------------
+void loop() 
+/// ----------------------------------------------------------------------------------
+{
+  // Read incoming command from Android
+  if (BTSerial.available() > 0)
+  {
+    //androidCmd = BTSerial.read();
+    androidCmd = BTSerial.readStringUntil('\r');
+    //Serial.println(androidCmd); // 매 바이트마다 제어문자 송출
+    Serial.println(androidCmd); // For debug purpose
+
+    nr = androidCmd.toInt();
+    analogWrite(9, nr);
+  }
+  //androidCmd = NULL;
+  blinkingLed(); // Run LED is blinking
+}
+
+// Serial.println(""); // Send Terminal
+// BTSerial.println(""); // Send Android
+/// ----------------------------------------------------------------------------------
+void blinkingLed()
+/// ----------------------------------------------------------------------------------
+// Function to Blink LED
+// Called from the loop function
+{
+  digitalWrite(RunledPin,HIGH);
+  delay(100);
+  digitalWrite(RunledPin,LOW);
+  delay(100);
+}

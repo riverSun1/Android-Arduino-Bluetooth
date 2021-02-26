@@ -1,0 +1,5 @@
+안드로이드 블루투스 앱 예제 
+- 전체적으로 컬러넣고, 
+   Blue LED와 Red LED 버튼 따로 만들어서
+   Blue LED와 Red LED 둘다 작동 가능하게 함
+   전구 이미지로 on/off 표현
